@@ -740,6 +740,9 @@ namespace RealismMod
                 new MedkitConstructorPatch().Enable();
                 new HealthEffectsConstructorPatch().Enable();
                 new HCApplyDamagePatch().Enable();
+                new HCChangeHealthPatch().Enable();
+                new HCDoBleedHeavyPatch().Enable();
+                new HCDoBleedLightPatch().Enable();
                 new RestoreBodyPartPatch().Enable();
                 new FlyingBulletPatch().Enable();
                 new ToggleHeadDevicePatch().Enable();

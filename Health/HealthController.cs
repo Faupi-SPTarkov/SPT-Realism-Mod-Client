@@ -1741,6 +1741,38 @@ namespace RealismMod
                 }
             }
         }
+
+        public bool ShouldBlockBleed(EBodyPart bodyPart)
+        {
+            bool isHead = false;
+            bool isBody = false;
+            bool isNotLimb = false;
+            GetBodyPartType((EBodyPart)bodyPart, ref isHead, ref isBody, ref isNotLimb);
+
+            bool isLimb = !isNotLimb;
+            bool hasTrnqt = Plugin.RealHealthController.HasCustomEffectOfType(typeof(TourniquetEffect), bodyPart);
+
+            // TODO: If bleeds can be limited to just the limb, add condition to 0 HP (let it bleed until it's blacked out, then let stuff clear bleeds)
+            if (isLimb && hasTrnqt)
+                return true;
+
+            return false;
+        }
+
+        public bool ShouldBlockOverdamage(EBodyPart bodyPart)
+        {
+            bool isHead = false;
+            bool isBody = false;
+            bool isNotLimb = false;
+            GetBodyPartType((EBodyPart)bodyPart, ref isHead, ref isBody, ref isNotLimb);
+
+            bool isLimb = !isNotLimb;
+            bool hasTrnqt = Plugin.RealHealthController.HasCustomEffectOfType(typeof(TourniquetEffect), bodyPart);
+
+            if (isLimb && hasTrnqt)
+                return true;
+
+            return false;
+        }
     }
 }
- 
