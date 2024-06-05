@@ -46,3 +46,5 @@ obj
 bin
 libs
 .vs
+Dependencies
+.vscode/tasks.json
