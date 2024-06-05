@@ -109,7 +109,7 @@ namespace RealismMod
 
             if (totalVolume != 0.0f || totalVignette != 0.0f)
             {
-                DeafeningController.PrismEffects.vignetteStrength = totalVignette;  
+                DeafeningController.PrismEffects.vignetteStrength = totalVignette;
                 if (!DeafeningController.HasHeadSet)
                 {
                     Singleton<BetterAudio>.Instance.Master.SetFloat("GunsVolume", totalVolume + DeafeningController.GunsVolume);

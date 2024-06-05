@@ -64,7 +64,7 @@ namespace RealismMod
         {
             if (confItemArray != null && confItemArray.Length >= length)
             {
-                if (confItemArray[0] == "SPTRM") 
+                if (confItemArray[0] == "SPTRM")
                 {
                     return false;
                 }
@@ -72,7 +72,7 @@ namespace RealismMod
             return true;
         }
 
-        public static Player GetYourPlayer() 
+        public static Player GetYourPlayer()
         {
             GameWorld gameWorld = Singleton<GameWorld>.Instance;
             return gameWorld.MainPlayer;
@@ -81,7 +81,7 @@ namespace RealismMod
         public static Player GetPlayerByID(string id)
         {
             GameWorld gameWorld = Singleton<GameWorld>.Instance;
-            return gameWorld.GetAlivePlayerByProfileID(id);   
+            return gameWorld.GetAlivePlayerByProfileID(id);
         }
 
         public static bool CheckIsReady()
@@ -93,7 +93,7 @@ namespace RealismMod
             if (player != null)
             {
                 Utils.WeaponReady = player?.HandsController != null && player?.HandsController?.Item != null && player?.HandsController?.Item is Weapon ? true : false;
-                Utils.IsInHideout = player is HideoutPlayer ? true : false; 
+                Utils.IsInHideout = player is HideoutPlayer ? true : false;
             }
 
             if (gameWorld == null || gameWorld.AllAlivePlayersList == null || gameWorld.MainPlayer == null || sessionResultPanel != null)

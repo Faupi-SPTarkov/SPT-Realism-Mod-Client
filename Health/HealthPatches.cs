@@ -103,7 +103,7 @@ namespace RealismMod
 
     public class HealthEffectsConstructorPatch : ModulePatch
     {
-        private static List<string> modifiedMeds = new List<string>();  
+        private static List<string> modifiedMeds = new List<string>();
 
         protected override MethodBase GetTargetMethod()
         {
@@ -174,7 +174,7 @@ namespace RealismMod
         {
             string medType = MedProperties.MedType(item);
 
-            if (item.Template._parent == "5448f3a64bdc2d60728b456a") 
+            if (item.Template._parent == "5448f3a64bdc2d60728b456a")
             {
                 List<ItemAttributeClass> stimAtt = item.Attributes;
                 ItemAttributeClass stimAttClass = new ItemAttributeClass(Attributes.ENewItemAttributeId.StimType);
@@ -191,7 +191,7 @@ namespace RealismMod
                 string hBleedType = MedProperties.HBleedHealType(item);
                 float hpPerTick = medType != "surg" ? -MedProperties.HpPerTick(item) : MedProperties.HpPerTick(item);
 
-                if (medType == "medkit") 
+                if (medType == "medkit")
                 {
                     float hp = MedProperties.HPRestoreAmount(item);
                     List<ItemAttributeClass> hbAtt = item.Attributes;
@@ -306,7 +306,7 @@ namespace RealismMod
             return typeof(PhysicalClass).GetMethod("get_BreathIsAudible", BindingFlags.Instance | BindingFlags.Public);
         }
         [PatchPrefix]
-        private static bool Prefix(PhysicalClass __instance,ref bool __result)
+        private static bool Prefix(PhysicalClass __instance, ref bool __result)
         {
             __result = !__instance.HoldingBreath && ((__instance.StaminaParameters.StaminaExhaustionStartsBreathSound && __instance.Stamina.Exhausted) || __instance.Oxygen.Exhausted || Plugin.RealHealthController.HasOverdosed);
             return false;
@@ -322,7 +322,7 @@ namespace RealismMod
 
         }
 
-        private static void restoreHP(HealthControllerClass controller, EBodyPart initialTarget, float hpToRestore) 
+        private static void restoreHP(HealthControllerClass controller, EBodyPart initialTarget, float hpToRestore)
         {
             if (initialTarget != EBodyPart.Common)
             {
@@ -502,7 +502,7 @@ namespace RealismMod
         [PatchPrefix]
         private static bool Prefix(ActiveHealthController __instance, EBodyPart bodyPart, float healthPenalty, ref bool __result)
         {
-            if (__instance.Player.IsYourPlayer) 
+            if (__instance.Player.IsYourPlayer)
             {
                 //I had to do this previously due to the type being protected, no longer is the case. Keeping for reference.
                 /* BodyPartStateWrapper bodyPartStateWrapper = GetBodyPartStateWrapper(__instance, bodyPart);*/
@@ -705,7 +705,7 @@ namespace RealismMod
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(EFT.Player).GetMethod("SetInHands", BindingFlags.Instance | BindingFlags.Public, null, new Type[] { typeof(MedsClass), typeof(EBodyPart), typeof(int), typeof(Callback<GInterface130>)}, null);
+            return typeof(EFT.Player).GetMethod("SetInHands", BindingFlags.Instance | BindingFlags.Public, null, new Type[] { typeof(MedsClass), typeof(EBodyPart), typeof(int), typeof(Callback<GInterface130>) }, null);
         }
 
         [PatchPrefix]

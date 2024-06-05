@@ -134,11 +134,11 @@ namespace RealismMod
 
         public void ResetTracker()
         {
-            if (DamageRecord.Any()) 
+            if (DamageRecord.Any())
             {
                 DamageRecord.Clear();
             }
- 
+
             TotalHeavyBleedDamage = 0f;
             TotalLightBleedDamage = 0f;
             TotalDehydrationDamage = 0f;
@@ -146,7 +146,7 @@ namespace RealismMod
         }
     }
 
-    public enum EStimType 
+    public enum EStimType
     {
         Regenerative,
         Damage,
@@ -185,9 +185,9 @@ namespace RealismMod
             {"5ed51652f6c34d2cc26336a1", EStimType.Weight }
         };
 
-        public List<EBodyPart> PossibleBodyParts = new List<EBodyPart> 
+        public List<EBodyPart> PossibleBodyParts = new List<EBodyPart>
         {
-            EBodyPart.Head, EBodyPart.Chest, EBodyPart.Stomach, EBodyPart.RightLeg, EBodyPart.LeftLeg, EBodyPart.RightArm, EBodyPart.LeftArm 
+            EBodyPart.Head, EBodyPart.Chest, EBodyPart.Stomach, EBodyPart.RightLeg, EBodyPart.LeftLeg, EBodyPart.RightArm, EBodyPart.LeftArm
         };
 
         private List<EStimType> activeStimOverdoses = new List<EStimType>();
@@ -243,9 +243,9 @@ namespace RealismMod
 
         private bool addedCustomEffectsToDict = false;
 
-        public bool ArmsAreIncapacitated 
+        public bool ArmsAreIncapacitated
         {
-            get 
+            get
             {
                 return rightArmRuined || leftArmRuined || (PainStrength > PainArmThreshold && PainStrength > PainReliefStrength);
             }
@@ -260,14 +260,14 @@ namespace RealismMod
         }
 
 
-        public RealismHealthController(DamageTracker dmgTracker) 
+        public RealismHealthController(DamageTracker dmgTracker)
         {
             DmgTracker = dmgTracker;
         }
 
         public void ControllerUpdate()
         {
-            if (!addedCustomEffectsToDict) 
+            if (!addedCustomEffectsToDict)
             {
                 AddCustomEffectsToDict();
                 addedCustomEffectsToDict = true;
@@ -282,7 +282,7 @@ namespace RealismMod
 
                 if (Input.GetKeyDown(Plugin.AddEffectKeybind.Value.MainKey))
                 {
-/*                    AddStimDebuffs(Utils.GetYourPlayer(), Plugin.AddEffectType.Value);*/ // use this to test stim debuffs
+                    /*                    AddStimDebuffs(Utils.GetYourPlayer(), Plugin.AddEffectType.Value);*/ // use this to test stim debuffs
                     TestAddBaseEFTEffect(Plugin.AddEffectBodyPart.Value, Utils.GetYourPlayer(), Plugin.AddEffectType.Value);
                     NotificationManagerClass.DisplayMessageNotification("Adding Health Effect " + Plugin.AddEffectType.Value + " To Part " + (EBodyPart)Plugin.AddEffectBodyPart.Value);
                 }
@@ -323,7 +323,7 @@ namespace RealismMod
                 ResetAllEffects();
                 DmgTracker.ResetTracker();
             }
- 
+
             if (AdrenalineCooldownActive && adrenalineCooldownTime > 0.0f)
             {
                 adrenalineCooldownTime -= Time.deltaTime;
@@ -336,7 +336,7 @@ namespace RealismMod
         }
 
 
-        public void AddCustomEffectsToDict() 
+        public void AddCustomEffectsToDict()
         {
             Type type1 = typeof(GClass2463.GClass2464);
             FieldInfo fieldInfo1 = type1.GetField("dictionary_1", BindingFlags.NonPublic | BindingFlags.Static);
@@ -555,7 +555,7 @@ namespace RealismMod
             PainTunnelStrength = 0f;
             ReliefDuration = 0;
             HasOverdosedStim = false;
-            leftArmRuined = false;  
+            leftArmRuined = false;
             rightArmRuined = false;
             resetHealhPenalties();
         }
@@ -630,7 +630,7 @@ namespace RealismMod
 
         private void EvaluateStimSingles(Player player, IEnumerable<IGrouping<EStimType, StimShellEffect>> stimGroups)
         {
-            foreach (var group in stimGroups) 
+            foreach (var group in stimGroups)
             {
                 switch (group.Key)
                 {
@@ -659,7 +659,7 @@ namespace RealismMod
             }
         }
 
-        private void EvaluateStimDuplicates(Player player, IEnumerable<IGrouping<EStimType, StimShellEffect>> stimGroups) 
+        private void EvaluateStimDuplicates(Player player, IEnumerable<IGrouping<EStimType, StimShellEffect>> stimGroups)
         {
             foreach (var group in stimGroups) // use this to count duplicates per category
             {
@@ -668,7 +668,7 @@ namespace RealismMod
                     case EStimType.Adrenal:
                         if (!activeStimOverdoses.Contains(EStimType.Adrenal)) //if no active adrenal overdose
                         {
-                        
+
                             activeStimOverdoses.Add(EStimType.Adrenal);
                             doStimOverdoseTimer = true;
                             overdoseEffectToAdd = "adrenal_debuff";
@@ -676,7 +676,7 @@ namespace RealismMod
                         }
                         break;
                     case EStimType.Regenerative:
-                        if (!activeStimOverdoses.Contains(EStimType.Regenerative)) 
+                        if (!activeStimOverdoses.Contains(EStimType.Regenerative))
                         {
                             activeStimOverdoses.Add(EStimType.Regenerative);
                             doStimOverdoseTimer = true;
@@ -733,15 +733,16 @@ namespace RealismMod
             }
         }
 
-        public void EvaluateActiveStims(Player player) 
+        public void EvaluateActiveStims(Player player)
         {
             IEnumerable<StimShellEffect> stims = activeHealthEffects.OfType<StimShellEffect>();
             var stimTypeGroups = stims.GroupBy(effect => effect.StimType);
             var duplicatesGrouping = stimTypeGroups.Where(group => group.Count() > 1);
-/*            var singlesGrouping = stimTypeGroups.Where(group => group.Count() <= 1);
-*/          int totalDuplicates = duplicatesGrouping.Sum(group => group.Count());
+            /*            var singlesGrouping = stimTypeGroups.Where(group => group.Count() <= 1);
+            */
+            int totalDuplicates = duplicatesGrouping.Sum(group => group.Count());
             EvaluateStimDuplicates(player, duplicatesGrouping);
-       /*     EvaluateStimSingles(player, singlesGrouping);*/
+            /*     EvaluateStimSingles(player, singlesGrouping);*/
             if (totalDuplicates > 1)
             {
                 HasOverdosedStim = true;
@@ -749,7 +750,7 @@ namespace RealismMod
             else HasOverdosedStim = false;
         }
 
-        public EStimType GetStimType(string id) 
+        public EStimType GetStimType(string id)
         {
             return StimTypes.TryGetValue(id, out EStimType type) ? type : EStimType.Generic;
         }
@@ -784,10 +785,10 @@ namespace RealismMod
             }
         }
 
-        private void PainReliefCheck(Player player) 
+        private void PainReliefCheck(Player player)
         {
             ReliefDuration = Math.Max(ReliefDuration - 1, 0);
-            if (ReliefDuration > 0) 
+            if (ReliefDuration > 0)
             {
                 if (PainReliefStrength >= PainStrength)
                 {
@@ -800,7 +801,7 @@ namespace RealismMod
 
                     if (PainReliefStrength > PKOverdoseThreshold)
                     {
-                        if (!haveNotifiedPKOverdose) 
+                        if (!haveNotifiedPKOverdose)
                         {
                             NotificationManagerClass.DisplayWarningNotification("Overdosed On PainKillers", EFT.Communications.ENotificationDurationType.Long);
                             haveNotifiedPKOverdose = true;
@@ -817,7 +818,7 @@ namespace RealismMod
         }
 
 
-        private void TickEffects() 
+        private void TickEffects()
         {
             for (int i = activeHealthEffects.Count - 1; i >= 0; i--)
             {
@@ -884,7 +885,7 @@ namespace RealismMod
 
             doResourceDrain(player.ActiveHealthController, Time.deltaTime);
 
-            if (healthControllerTime >= 3f) 
+            if (healthControllerTime >= 3f)
             {
                 healthControllerTime = 0f;
                 reset1 = false;
@@ -1200,7 +1201,7 @@ namespace RealismMod
             }
         }
 
-        public void CanUseMedItemCommon(MedsClass meds, Player player, ref EBodyPart bodyPart, ref bool shouldAllowHeal) 
+        public void CanUseMedItemCommon(MedsClass meds, Player player, ref EBodyPart bodyPart, ref bool shouldAllowHeal)
         {
             if (meds.Template._parent == "5448f3a64bdc2d60728b456a")
             {
@@ -1554,7 +1555,7 @@ namespace RealismMod
             }
         }
 
-        private void resetHealhPenalties() 
+        private void resetHealhPenalties()
         {
             PlayerState.AimMoveSpeedInjuryMulti = 1;
             PlayerState.ADSInjuryMulti = 1;
@@ -1563,7 +1564,7 @@ namespace RealismMod
             PlayerState.HealthSprintSpeedFactor = 1;
             PlayerState.HealthSprintAccelFactor = 1;
             PlayerState.HealthWalkSpeedFactor = 1;
-            PlayerState.HealthStamRegenFactor =1;
+            PlayerState.HealthStamRegenFactor = 1;
             PlayerState.ErgoDeltaInjuryMulti = 1;
             PlayerState.RecoilInjuryMulti = 1;
 
@@ -1743,4 +1744,3 @@ namespace RealismMod
         }
     }
 }
- 

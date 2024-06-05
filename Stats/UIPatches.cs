@@ -22,7 +22,7 @@ using Aki.Reflection.Utils;
 
 namespace RealismMod
 {
- 
+
     public class ArmorClassStringPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
@@ -374,9 +374,9 @@ namespace RealismMod
             return typeof(Weapon).GetMethod("get_AmmoCaliber", BindingFlags.Instance | BindingFlags.Public);
         }
 
-        private static bool IsMulti556(Mod mod) 
+        private static bool IsMulti556(Mod mod)
         {
-            return Utils.IsBarrel(mod) && AttachmentProperties.ModType(mod) == "556";  
+            return Utils.IsBarrel(mod) && AttachmentProperties.ModType(mod) == "556";
         }
         private static bool IsMulti308(Mod mod)
         {
@@ -397,7 +397,7 @@ namespace RealismMod
         [PatchPrefix]
         private static bool Prefix(Weapon __instance, ref string __result)
         {
-            if (__instance.Mods.Any(IsMulti556)) 
+            if (__instance.Mods.Any(IsMulti556))
             {
                 __result = "556x45NATO";
                 return false;

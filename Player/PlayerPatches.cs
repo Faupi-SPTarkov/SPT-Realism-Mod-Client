@@ -32,7 +32,7 @@ namespace RealismMod
             return typeof(InputClass).GetMethod("TranslateCommand", BindingFlags.Instance | BindingFlags.Public);
         }
 
-        private static void RechamberRound(FirearmController fc, Player player) 
+        private static void RechamberRound(FirearmController fc, Player player)
         {
             Plugin.CanLoadChamber = true;
             int currentMagazineCount = fc.Weapon.GetCurrentMagazineCount();
@@ -56,7 +56,7 @@ namespace RealismMod
         [PatchPrefix]
         private static bool PatchPrefix(InputClass __instance, ECommand command)
         {
-            if (command == ECommand.ToggleStepLeft || command == ECommand.ToggleStepRight || command == ECommand.ReturnFromRightStep || command == ECommand.ReturnFromLeftStep) 
+            if (command == ECommand.ToggleStepLeft || command == ECommand.ToggleStepRight || command == ECommand.ReturnFromRightStep || command == ECommand.ReturnFromLeftStep)
             {
                 StanceController.IsMounting = false;
             }
@@ -64,8 +64,8 @@ namespace RealismMod
             {
                 Player player = Utils.GetYourPlayer();
                 FirearmController fc = player.HandsController as FirearmController;
-                if (player.MovementContext.CurrentState.Name != EPlayerState.Stationary 
-                    && !Plugin.CanLoadChamber && fc.Weapon.HasChambers && fc.Weapon.Chambers.Length == 1 
+                if (player.MovementContext.CurrentState.Name != EPlayerState.Stationary
+                    && !Plugin.CanLoadChamber && fc.Weapon.HasChambers && fc.Weapon.Chambers.Length == 1
                     && fc.Weapon.ChamberAmmoCount == 0 && fc.Weapon.GetCurrentMagazine() != null && fc.Weapon.GetCurrentMagazine().Count > 0)
                 {
                     RechamberRound(fc, player);
@@ -83,9 +83,9 @@ namespace RealismMod
                 FirearmController fc = player.HandsController as FirearmController;
                 StanceController.DoWiggleEffects(player, player.ProceduralWeaponAnimation, fc.Weapon, new Vector3(0.25f, 0.25f, 0.5f));
             }
-            if (Plugin.ServerConfig.enable_stances && Plugin.BlockFiring.Value && command == ECommand.ToggleShooting 
-                && !Plugin.RealHealthController.ArmsAreIncapacitated && !Plugin.RealHealthController.HasOverdosed 
-                && StanceController.CurrentStance != EStance.None && StanceController.CurrentStance != EStance.ActiveAiming 
+            if (Plugin.ServerConfig.enable_stances && Plugin.BlockFiring.Value && command == ECommand.ToggleShooting
+                && !Plugin.RealHealthController.ArmsAreIncapacitated && !Plugin.RealHealthController.HasOverdosed
+                && StanceController.CurrentStance != EStance.None && StanceController.CurrentStance != EStance.ActiveAiming
                 && StanceController.CurrentStance != EStance.ShortStock && StanceController.CurrentStance != EStance.PistolCompressed
                 && !StanceController.IsLeftShoulder)
             {
@@ -179,7 +179,7 @@ namespace RealismMod
         }
     }
 
-    public class PlayerInitPatch    : ModulePatch
+    public class PlayerInitPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
         {
@@ -394,7 +394,7 @@ namespace RealismMod
             }
         }
 
-        private static void PWAUpdate(Player player, Player.FirearmController fc) 
+        private static void PWAUpdate(Player player, Player.FirearmController fc)
         {
             if (fc != null)
             {
@@ -437,7 +437,7 @@ namespace RealismMod
             {
                 StanceController.UnarmedStanceStamina(player);
             }
-            else 
+            else
             {
                 StanceController.IsMounting = false;
             }
@@ -453,7 +453,7 @@ namespace RealismMod
             return typeof(Player).GetMethod("LateUpdate", BindingFlags.Instance | BindingFlags.Public);
         }
 
-        [PatchPostfix] 
+        [PatchPostfix]
         private static void PatchPostfix(Player __instance)
         {
             if (Plugin.ServerConfig.headset_changes)
@@ -471,7 +471,7 @@ namespace RealismMod
                 PlayerState.IsSprinting = __instance.IsSprintEnabled;
                 PlayerState.EnviroType = __instance.Environment;
                 StanceController.IsInInventory = __instance.IsInventoryOpened;
-                PlayerState.IsMoving = __instance.IsSprintEnabled || __instance.MovementContext.AbsoluteMovementDirection.x  > 0 || __instance.MovementContext.AbsoluteMovementDirection.y > 0;
+                PlayerState.IsMoving = __instance.IsSprintEnabled || __instance.MovementContext.AbsoluteMovementDirection.x > 0 || __instance.MovementContext.AbsoluteMovementDirection.y > 0;
 
                 if (Plugin.EnableSprintPenalty.Value)
                 {

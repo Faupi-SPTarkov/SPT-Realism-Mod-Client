@@ -67,7 +67,7 @@ namespace RealismMod
             if (Delay <= 0)
             {
                 TimeExisted++;
-       
+
                 if (!haveNotified)
                 {
                     NotificationManagerClass.DisplayWarningNotification("Tourniquet Applied On " + BodyPart + ", You Are Losing Health On This Limb. Use A Surgery Kit To Remove It.", EFT.Communications.ENotificationDurationType.Long);
@@ -88,7 +88,7 @@ namespace RealismMod
                     Plugin.RealHealthController.RemoveBaseEFTEffect(_Player, BodyPart, "LightBleeding");
                 }
 
-                if (currentPartHP > 25f && TimeExisted % 3 == 0) 
+                if (currentPartHP > 25f && TimeExisted % 3 == 0)
                 {
                     _Player.ActiveHealthController.AddEffect<HealthRegen>(BodyPart, 0f, 3f, 1f, HpPerTick, null);
                 }
@@ -193,7 +193,7 @@ namespace RealismMod
             {
                 if (Delay <= 0 && TimeExisted % 3 == 0)
                 {
-                    _Player.ActiveHealthController.AddEffect<HealthDrain>( 0f, 3f, 1f, HpPerTick, null);
+                    _Player.ActiveHealthController.AddEffect<HealthDrain>(0f, 3f, 1f, HpPerTick, null);
                     HpDrained += HpPerTick;
                 }
             }
@@ -291,7 +291,7 @@ namespace RealismMod
 
         public void Tick()
         {
-            if (!addedEffect) 
+            if (!addedEffect)
             {
                 _Player.ActiveHealthController.AddEffect<ResourceRateDrain>(BodyPart, 0f, null, 0f, 0f, null);
                 addedEffect = true;
@@ -403,7 +403,7 @@ namespace RealismMod
             this.time -= 3f;
             foreach (EBodyPart part in bodyParts)
             {
-                if (this.HealthController.GetBodyPartHealth(part).Current > 0f) 
+                if (this.HealthController.GetBodyPartHealth(part).Current > 0f)
                 {
                     this.HealthController.ApplyDamage(part, this.hpPerTick / bodyParts.Count(), ExistanceClass.PoisonDamage);
                 }
@@ -459,7 +459,7 @@ namespace RealismMod
         public override void RegularUpdate(float deltaTime)
         {
             this.time += deltaTime;
-            if (this.time < 3f) 
+            if (this.time < 3f)
             {
                 return;
             }

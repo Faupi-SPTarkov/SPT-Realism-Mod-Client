@@ -37,7 +37,7 @@ namespace RealismMod
                 PlayerState.FSIsActive = fsIsON;
                 PlayerState.NVGIsActive = nvgIsOn || thermalIsOn;
 
-                if (HeadDeviceStateChanged) 
+                if (HeadDeviceStateChanged)
                 {
                     StatCalc.GetGearPenalty(Utils.GetYourPlayer());
                     HeadDeviceStateChanged = false;

@@ -206,10 +206,10 @@ namespace RealismMod
             StanceController.IsBracing = true;
         }
 
-        private static Vector3 getWiggleDir(EBracingDirection coverDir) 
+        private static Vector3 getWiggleDir(EBracingDirection coverDir)
         {
             {
-                switch(coverDir) 
+                switch (coverDir)
                 {
                     case EBracingDirection.Right:
                         return wiggleRightDir;
@@ -257,11 +257,11 @@ namespace RealismMod
                 RaycastHit[] raycastArr = AccessTools.StaticFieldRefAccess<EFT.Player.FirearmController, RaycastHit[]>("raycastHit_0");
                 Func<RaycastHit, bool> isHitIgnoreTest = (Func<RaycastHit, bool>)hitIgnoreField.GetValue(fc);
                 Vector3 linecastDirection = weapTransform.TransformDirection(Vector3.up);
-                Vector3 startMeleeDir = new Vector3(0, -0.5f, -0.025f); 
+                Vector3 startMeleeDir = new Vector3(0, -0.5f, -0.025f);
                 Vector3 meleeStart = weapTransform.position + weapTransform.TransformDirection(startMeleeDir);
                 Vector3 meleeDir = meleeStart - linecastDirection * (ln - (WeaponStats.HasBayonet ? 0.1f : 0.25f));
 
-                if (Plugin.EnableLogging.Value) 
+                if (Plugin.EnableLogging.Value)
                 {
                     DebugGizmos.SingleObjects.Line(meleeStart, meleeDir, Color.red, 0.02f, true, 0.3f, true);
                 }
@@ -324,8 +324,9 @@ namespace RealismMod
                     }
                     float vol = WeaponStats.HasBayonet ? 10f : 12f;
                     Singleton<BetterAudio>.Instance.PlayDropItem(baseballComp.SurfaceSound, JsonType.EItemDropSoundType.Rifle, raycastHit.point, vol);
-/*                  StanceController.DoWiggleEffects(player, player.ProceduralWeaponAnimation, fc, new Vector3(-10f, 10f, 0f), true, 1.5f);
-*/                  player.Physical.ConsumeAsMelee(0.3f + (weaponWeight / 10f));
+                    /*                  StanceController.DoWiggleEffects(player, player.ProceduralWeaponAnimation, fc, new Vector3(-10f, 10f, 0f), true, 1.5f);
+                    */
+                    player.Physical.ConsumeAsMelee(0.3f + (weaponWeight / 10f));
 
                     StanceController.CanDoMeleeDetection = false;
                     StanceController.MeleeHitSomething = true;
@@ -349,7 +350,7 @@ namespace RealismMod
             if (player.IsYourPlayer)
             {
                 doMelee(__instance, ln, player);
-  
+
                 timer += 1;
                 if (timer >= 60)
                 {
@@ -372,12 +373,12 @@ namespace RealismMod
                     /*                    DebugGizmos.SingleObjects.Line(startDown, forwardDirection, Color.red, 0.02f, true, 0.3f, true);
                                         DebugGizmos.SingleObjects.Line(startLeft, leftDirection, Color.green, 0.02f, true, 0.3f, true);
                                         DebugGizmos.SingleObjects.Line(startRight, rightDirection, Color.yellow, 0.02f, true, 0.3f, true);*/
-        
+
                     RaycastHit raycastHit;
 
                     if (checkForCoverCollision(EBracingDirection.Top, startDown, forwardDirection, out raycastHit, raycastArr, isHitIgnoreTest, weapClass) ||
                         checkForCoverCollision(EBracingDirection.Left, startLeft, leftDirection, out raycastHit, raycastArr, isHitIgnoreTest, weapClass) ||
-                        checkForCoverCollision(EBracingDirection.Right, startRight, rightDirection, out raycastHit, raycastArr, isHitIgnoreTest, weapClass)) 
+                        checkForCoverCollision(EBracingDirection.Right, startRight, rightDirection, out raycastHit, raycastArr, isHitIgnoreTest, weapClass))
                     {
                         return;
                     }
@@ -385,7 +386,7 @@ namespace RealismMod
                     StanceController.IsBracing = false;
                 }
 
-                if (StanceController.IsBracing) 
+                if (StanceController.IsBracing)
                 {
                     float mountOrientationBonus = StanceController.BracingDirection == EBracingDirection.Top ? 0.75f : 1f;
                     float mountingRecoilLimit = WeaponStats.IsStocklessPistol ? 0.25f : 0.75f;
@@ -493,10 +494,10 @@ namespace RealismMod
         private static FieldInfo playerField;
         private static FieldInfo fcField;
 
-     /*   private static Dictionary<string, Vector3> weaponOffsets = new Dictionary<string, Vector3>
-        {
-            { "", new Vector3(0, 0, 0)  }
-        };*/
+        /*   private static Dictionary<string, Vector3> weaponOffsets = new Dictionary<string, Vector3>
+           {
+               { "", new Vector3(0, 0, 0)  }
+           };*/
 
         protected override MethodBase GetTargetMethod()
         {
@@ -572,14 +573,14 @@ namespace RealismMod
                     __instance.BlindFireEndPosition = ((blindFireBlendValue > 0f) ? __instance.BlindFireOffset : __instance.SideFireOffset);
                     __instance.BlindFireEndPosition *= strength;
                 }
-                else 
+                else
                 {
                     StanceController.IsBlindFiring = false;
                     blindfirePositionField.SetValue(__instance, Vector3.zero);
                     blindfireRotationField.SetValue(__instance, Vector3.zero);
                 }
 
-    
+
                 if (Mathf.Abs(stanceBlendValue) > 0f)
                 {
                     float strength = ((Mathf.Abs(__instance.Pitch) < 45f) ? 1f : ((90f - Mathf.Abs(__instance.Pitch)) / 45f));
@@ -754,24 +755,24 @@ namespace RealismMod
                     bool isAiming = (bool)isAimingField.GetValue(__instance);
 
                     bool allStancesReset = hasResetActiveAim && hasResetLowReady && hasResetHighReady && hasResetShortStock && hasResetPistolPos;
-                    bool isInStance = 
-                        StanceController.CurrentStance == EStance.HighReady || 
-                        StanceController.CurrentStance == EStance.LowReady || 
-                        StanceController.CurrentStance == EStance.ShortStock || 
+                    bool isInStance =
+                        StanceController.CurrentStance == EStance.HighReady ||
+                        StanceController.CurrentStance == EStance.LowReady ||
+                        StanceController.CurrentStance == EStance.ShortStock ||
                         StanceController.CurrentStance == EStance.ActiveAiming ||
                         StanceController.CurrentStance == EStance.Melee;
-                    bool isInShootableStance = 
-                        StanceController.CurrentStance == EStance.ShortStock || 
+                    bool isInShootableStance =
+                        StanceController.CurrentStance == EStance.ShortStock ||
                         StanceController.CurrentStance == EStance.ActiveAiming ||
-                        WeaponStats.IsStocklessPistol || 
+                        WeaponStats.IsStocklessPistol ||
                         StanceController.CurrentStance == EStance.Melee;
                     bool cancelBecauseShooting = StanceController.IsFiringFromStance && !isInShootableStance;
                     bool doStanceRotation = (isInStance || !allStancesReset || StanceController.CurrentStance == EStance.PistolCompressed) && !cancelBecauseShooting;
                     bool allowActiveAimReload = Plugin.ActiveAimReload.Value && PlayerState.IsInReloadOpertation && !PlayerState.IsAttemptingToReloadInternalMag && !PlayerState.IsQuickReloading;
-                    bool cancelStance = 
-                        (StanceController.CancelActiveAim && StanceController.CurrentStance == EStance.ActiveAiming && !allowActiveAimReload) || 
+                    bool cancelStance =
+                        (StanceController.CancelActiveAim && StanceController.CurrentStance == EStance.ActiveAiming && !allowActiveAimReload) ||
                         (StanceController.CancelHighReady && StanceController.CurrentStance == EStance.HighReady) ||
-                        (StanceController.CancelLowReady && StanceController.CurrentStance == EStance.LowReady) || 
+                        (StanceController.CancelLowReady && StanceController.CurrentStance == EStance.LowReady) ||
                         (StanceController.CancelShortStock && StanceController.CurrentStance == EStance.ShortStock); //|| (StanceController.CancelPistolStance && StanceController.PistolIsCompressed)
 
                     currentRotation = Quaternion.Slerp(currentRotation, __instance.IsAiming && allStancesReset ? scopeRotation : doStanceRotation ? stanceRotation : Quaternion.identity, doStanceRotation ? stanceRotationSpeed * Plugin.StanceRotationSpeedMulti.Value : __instance.IsAiming ? 8f * aimSpeed * dt : 8f * dt);
@@ -1014,24 +1015,24 @@ namespace RealismMod
                 StanceController.IsLeftShoulder = __instance.LeftStance;
 
                 bool allStancesAreReset = hasResetActiveAim && hasResetLowReady && hasResetHighReady && hasResetShortStock && hasResetPistolPos;
-                bool isInStance = 
-                    StanceController.CurrentStance == EStance.HighReady || 
-                    StanceController.CurrentStance == EStance.LowReady || 
+                bool isInStance =
+                    StanceController.CurrentStance == EStance.HighReady ||
+                    StanceController.CurrentStance == EStance.LowReady ||
                     StanceController.CurrentStance == EStance.ShortStock ||
-                    StanceController.CurrentStance == EStance.ActiveAiming || 
-                    StanceController.CurrentStance == EStance.Melee;
-                bool isInShootableStance = 
-                    StanceController.CurrentStance == EStance.ShortStock || 
                     StanceController.CurrentStance == EStance.ActiveAiming ||
-                    WeaponStats.IsStocklessPistol || 
+                    StanceController.CurrentStance == EStance.Melee;
+                bool isInShootableStance =
+                    StanceController.CurrentStance == EStance.ShortStock ||
+                    StanceController.CurrentStance == EStance.ActiveAiming ||
+                    WeaponStats.IsStocklessPistol ||
                     StanceController.CurrentStance == EStance.Melee;
                 bool cancelBecauseShooting = StanceController.IsFiringFromStance && !isInShootableStance;
                 bool doStanceRotation = (isInStance || !allStancesAreReset || StanceController.CurrentStance == EStance.PistolCompressed) && !cancelBecauseShooting;
                 bool allowActiveAimReload = Plugin.ActiveAimReload.Value && PlayerState.IsInReloadOpertation && !PlayerState.IsAttemptingToReloadInternalMag && !PlayerState.IsQuickReloading;
-                bool cancelStance = 
+                bool cancelStance =
                     (StanceController.CancelActiveAim && StanceController.CurrentStance == EStance.ActiveAiming && !allowActiveAimReload) ||
-                    (StanceController.CancelHighReady && StanceController.CurrentStance == EStance.HighReady) || 
-                    (StanceController.CancelLowReady && StanceController.CurrentStance == EStance.LowReady) || 
+                    (StanceController.CancelHighReady && StanceController.CurrentStance == EStance.HighReady) ||
+                    (StanceController.CancelLowReady && StanceController.CurrentStance == EStance.LowReady) ||
                     (StanceController.CancelShortStock && StanceController.CurrentStance == EStance.ShortStock); // || (StanceController.CancelPistolStance && StanceController.PistolIsCompressed)
 
                 currentRotation = Quaternion.Slerp(currentRotation, __instance.IsAiming && allStancesAreReset ? aimingQuat : doStanceRotation ? stanceRotation : Quaternion.identity, doStanceRotation ? stanceRotationSpeed * Plugin.StanceRotationSpeedMulti.Value : __instance.IsAiming ? 8f * aimSpeed * dt : 8f * dt);
