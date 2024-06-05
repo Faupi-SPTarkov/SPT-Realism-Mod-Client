@@ -14,7 +14,7 @@ using UnityEngine.UI;
 using BPConstructor = GClass2684;
 using BPTemplate = GClass2587;
 using RigConstructor = GClass2685;
-using RigTemplate = GClass2588; 
+using RigTemplate = GClass2588;
 using HeadsetClass = GClass2639;
 using HeadsetTemplate = GClass2542;
 using ArmorCompTemplate = GInterface280;
@@ -33,7 +33,7 @@ namespace RealismMod
         private static float getAverage(Func<CompositeArmorComponent, float> predicate, Item item)
         {
             List<CompositeArmorComponent> listofComps = item.GetItemComponentsInChildren<CompositeArmorComponent>(true).ToList();
-            if (!listofComps.Any()) 
+            if (!listofComps.Any())
             {
                 return 0f;
             }
@@ -70,9 +70,9 @@ namespace RealismMod
                     comfortAtt.Add(comfortAttClass);
                 }
             }
-     
+
             ArmorComponent armorComp;
-            if (anyArmorPlateSlots || item.TryGetItemComponent<ArmorComponent>(out armorComp)) 
+            if (anyArmorPlateSlots || item.TryGetItemComponent<ArmorComponent>(out armorComp))
             {
                 bool allowADS = GearStats.AllowsADS(item);
                 if (!allowADS)
@@ -131,7 +131,7 @@ namespace RealismMod
         {
             Item item = __instance as Item;
 
-            if (Plugin.ServerConfig.reload_changes) 
+            if (Plugin.ServerConfig.reload_changes)
             {
                 float gearReloadSpeed = GearStats.ReloadSpeedMulti(item);
                 if (gearReloadSpeed > 0f && gearReloadSpeed != 1f)
@@ -149,7 +149,7 @@ namespace RealismMod
                 }
             }
 
-            if (Plugin.ServerConfig.gear_weight) 
+            if (Plugin.ServerConfig.gear_weight)
             {
                 if (template.ArmorType == EArmorType.None)
                 {

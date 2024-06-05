@@ -58,10 +58,10 @@ namespace RealismMod
         public static EBodyPartColliderType[] HeadCollidors = { EBodyPartColliderType.Eyes, EBodyPartColliderType.Ears, EBodyPartColliderType.Jaw, EBodyPartColliderType.BackHead, EBodyPartColliderType.NeckFront, EBodyPartColliderType.NeckBack, EBodyPartColliderType.HeadCommon, EBodyPartColliderType.ParietalHead };
         public static EBodyPartColliderType[] ArmCollidors = { EBodyPartColliderType.LeftUpperArm, EBodyPartColliderType.RightUpperArm, EBodyPartColliderType.LeftForearm, EBodyPartColliderType.RightForearm, };
         public static EBodyPartColliderType[] FaceSpallProtectionCollidors = { EBodyPartColliderType.NeckBack, EBodyPartColliderType.NeckFront, EBodyPartColliderType.Jaw, EBodyPartColliderType.Eyes, EBodyPartColliderType.HeadCommon };
-        public static EBodyPartColliderType[] LegSpallProtectionCollidors = { EBodyPartColliderType.PelvisBack, EBodyPartColliderType.Pelvis};
+        public static EBodyPartColliderType[] LegSpallProtectionCollidors = { EBodyPartColliderType.PelvisBack, EBodyPartColliderType.Pelvis };
 
 
-        public static void CalcAfterPenStats(float actualDurability, float armorClass, float templateDurability, ref float damage, ref float penetration, float factor = 1) 
+        public static void CalcAfterPenStats(float actualDurability, float armorClass, float templateDurability, ref float damage, ref float penetration, float factor = 1)
         {
             float armorFactor = 1f - ((armorClass / 80f) * (actualDurability / templateDurability));
             float damageReductionFactor = Mathf.Clamp(armorFactor, 0.85f, 1f);
@@ -72,7 +72,7 @@ namespace RealismMod
 
         public static void ModifyDamageByHitZone(EBodyPartColliderType hitPart, EBodyHitZone hitZone, ref DamageInfo di)
         {
-            switch (hitZone) 
+            switch (hitZone)
             {
                 case EBodyHitZone.Unknown:
                     break;
@@ -278,7 +278,7 @@ namespace RealismMod
 
                 float dZoneZUpper = hitOrientation == EHitOrientation.BackHit ? 0.11f : 0.115f;
                 float dZoneZMid = hitOrientation == EHitOrientation.BackHit ? 0.11f : 0.115f;
-    
+
                 float aZoneZUpper = 0.0465f;
                 float aZoneZMid = 0.0465f;
                 float aZoneXMid = -0.07f; //-0.17f
@@ -291,7 +291,7 @@ namespace RealismMod
                 if (hitOrientation != EHitOrientation.TopHit && hitOrientation != EHitOrientation.BottomHit)
                 {
                     if (isSideHit)
-                    { 
+                    {
                         if (Plugin.EnableBallisticsLogging.Value == true)
                         {
                             logger.LogWarning("SIDE HIT");

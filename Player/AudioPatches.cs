@@ -105,7 +105,7 @@ namespace RealismMod
         [PatchPostfix]
         private static void PatchPostFix(PrismEffects __instance)
         {
-            if (__instance.gameObject.name == "FPS Camera") 
+            if (__instance.gameObject.name == "FPS Camera")
             {
                 if (DeafeningController.PrismEffects == __instance)
                 {
@@ -218,7 +218,7 @@ namespace RealismMod
         }
         [PatchPrefix]
         private static bool Prefix(HeadsetTemplate template, BetterAudio __instance)
-        { 
+        {
 
             bool hasHeadset = template != null && template?._id != null;
             float gunT;
@@ -323,10 +323,10 @@ namespace RealismMod
                     float ammoFactor = CalcAmmoFactor((shot.Ammo as BulletClass).ammoRec);
                     float deafenFactor = velocityFactor * ammoFactor;
 
-             /*       if (shot.InitialSpeed * weap.SpeedFactor <= 335f)
-                    {
-                        deafenFactor *= 0.6f;
-                    }*/
+                    /*       if (shot.InitialSpeed * weap.SpeedFactor <= 335f)
+                           {
+                               deafenFactor *= 0.6f;
+                           }*/
 
                     DeafeningController.AmmoDeafFactor = deafenFactor == 0f ? 1f : deafenFactor;
                 }
@@ -337,7 +337,7 @@ namespace RealismMod
                     float distanceFromPlayer = Vector3.Distance(shooterPos, playerPos);
                     if (distanceFromPlayer <= 15f)
                     {
-                        DeafeningController.IsBotFiring = true;;
+                        DeafeningController.IsBotFiring = true;
                         float velocityFactor = CalcVelocityFactor(weap.SpeedFactor);
                         float muzzleFactor = __instance.IsSilenced ? 0.4f : 1f;
                         float calFactor = StatCalc.CaliberLoudnessFactor(weap.AmmoCaliber);

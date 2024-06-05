@@ -153,7 +153,7 @@ namespace RealismMod
             PlayerState.GearErgoPenalty = 1f + totalErgo;
             PlayerState.GearSpeedPenalty = 1f + totalSpeed;
             player.ProceduralWeaponAnimation.UpdateWeaponVariables();
-            if (Plugin.EnableLogging.Value) 
+            if (Plugin.EnableLogging.Value)
             {
                 Utils.Logger.LogWarning("gear speed " + PlayerState.GearSpeedPenalty);
                 Utils.Logger.LogWarning("gear ergo " + PlayerState.GearErgoPenalty);
@@ -204,7 +204,7 @@ namespace RealismMod
                 {
                     break;
                 }
-           
+
                 reloadMulti *= GearStats.ReloadSpeedMulti(armorComponent.Item);
                 ArmorTemplate armorTemplate = armorComponent.Template as ArmorTemplate;
 
@@ -241,7 +241,7 @@ namespace RealismMod
         public static float ProceduralIntensityFactorCalc(float weapWeight, float idealWeapWeight)
         {
             //get percentage differenecne between weapon weight and a chosen minimum/threshold weight. Apply that % difference as a multiplier 
-            return ((weapWeight - idealWeapWeight) / idealWeapWeight) + 1f; 
+            return ((weapWeight - idealWeapWeight) / idealWeapWeight) + 1f;
         }
 
         public static void SpeedStatCalc(Weapon weap, float ergoWeight, float ergonomicWeightLessMag, float chamberSpeedMod, float reloadSpeedMod, ref float totalReloadSpeedLessMag, ref float totalChamberSpeed, ref float totalAimMoveSpeedFactor, ref float totalFiringChamberSpeed, ref float totalChamberCheckSpeed, ref float totalFixSpeed)
@@ -675,20 +675,20 @@ namespace RealismMod
             }
 
 
-/*            if (modType == "short_barrel")
-            {
+            /*            if (modType == "short_barrel")
+                        {
 
-                if (mod.Slots.Length > 0f && mod.Slots[1].ContainedItem != null)
-                {
-                    Mod containedMod = mod.Slots[1].ContainedItem as Mod;
-                    if (AttachmentProperties.ModType(containedMod) == "gasblock_upgassed")
-                    {
-                        modMalfChance = 0f;
-                    }
-                }
+                            if (mod.Slots.Length > 0f && mod.Slots[1].ContainedItem != null)
+                            {
+                                Mod containedMod = mod.Slots[1].ContainedItem as Mod;
+                                if (AttachmentProperties.ModType(containedMod) == "gasblock_upgassed")
+                                {
+                                    modMalfChance = 0f;
+                                }
+                            }
 
-                return;
-            }*/
+                            return;
+                        }*/
             /*            if (modType == "gasblock_upgassed")
             {
                 if (parent != null && AttachmentProperties.ModType(parent) == "short_barrel")
@@ -901,7 +901,7 @@ namespace RealismMod
                     return 4f;
                 case "127x108":
                     return 4f;
-                    
+
                 case "23x75":
                     return 3.35f;
                 case "12g":

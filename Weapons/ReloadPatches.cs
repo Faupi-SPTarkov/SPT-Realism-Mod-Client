@@ -58,11 +58,11 @@ namespace RealismMod
         [PatchPrefix]
         private static bool Prefix(ChamberWeaponClass __instance, Action onWeaponAppear)
         {
-            var fc = (FirearmController)AccessTools.Field(typeof(ChamberWeaponClass), "firearmController_0").GetValue( __instance);
+            var fc = (FirearmController)AccessTools.Field(typeof(ChamberWeaponClass), "firearmController_0").GetValue(__instance);
             var player = (Player)AccessTools.Field(typeof(FirearmController), "_player").GetValue(fc);
-            if (player.IsYourPlayer && player.MovementContext.CurrentState.Name != EPlayerState.Stationary) 
+            if (player.IsYourPlayer && player.MovementContext.CurrentState.Name != EPlayerState.Stationary)
             {
-                if (fc.Weapon.HasChambers && fc.Weapon.Chambers.Length == 1) 
+                if (fc.Weapon.HasChambers && fc.Weapon.Chambers.Length == 1)
                 {
                     var magazine = (MagazineClass)AccessTools.Field(typeof(ChamberWeaponClass), "gclass2669_0").GetValue(__instance);
                     var ammoIsCompatible = (bool)AccessTools.Field(typeof(ChamberWeaponClass), "bool_1").GetValue(__instance);
@@ -80,7 +80,7 @@ namespace RealismMod
 
                     magazine = fc.Weapon.GetCurrentMagazine();
                     AccessTools.Field(typeof(ChamberWeaponClass), "gclass2669_0").SetValue(__instance, magazine);
-                   
+
                     fc.AmmoInChamberOnSpawn = chamberAmmoCount;
 
                     if (fc.Weapon.ChamberAmmoCount == 0)
@@ -88,7 +88,7 @@ namespace RealismMod
                         Plugin.CanLoadChamber = false;
                         Plugin.BlockChambering = true;
                     }
-    
+
                     if (fc.Weapon.HasChambers)
                     {
                         fc.FirearmsAnimator.SetAmmoInChamber((float)chamberAmmoCount);
@@ -204,7 +204,7 @@ namespace RealismMod
         }
     }
 
- 
+
     public class ChamberCheckUIPatch : ModulePatch
     {
         private static FieldInfo ammoCountPanelField;
@@ -221,7 +221,7 @@ namespace RealismMod
         private static void PatchPostfix(Player.FirearmController __instance)
         {
             Player player = (Player)playerField.GetValue(__instance);
-            if (player.IsYourPlayer) 
+            if (player.IsYourPlayer)
             {
                 AmmoCountPanel panelUI = (AmmoCountPanel)ammoCountPanelField.GetValue(Singleton<GameUI>.Instance.BattleUiScreen);
                 Slot slot = __instance.Weapon.Chambers.FirstOrDefault<Slot>();
@@ -476,7 +476,7 @@ namespace RealismMod
             {
                 float totalFixSpeed = Mathf.Clamp(fix * WeaponStats.TotalFixSpeed * PlayerState.ReloadInjuryMulti * Plugin.GlobalFixSpeedMulti.Value * PlayerState.RemainingArmStamPercReload, 0.65f, 1.15f);
                 WeaponAnimationSpeedControllerClass.SetSpeedFix(__instance.Animator, totalFixSpeed);
-                __instance.SetAnimationSpeed(totalFixSpeed);         
+                __instance.SetAnimationSpeed(totalFixSpeed);
                 if (Plugin.EnableLogging.Value == true)
                 {
                     Logger.LogWarning("===SetMalfRepairSpeed===");
@@ -608,7 +608,7 @@ namespace RealismMod
         private static void PatchPostfix(Player.FirearmController __instance, MagazineClass magazine)
         {
             Player player = (Player)playerField.GetValue(__instance);
-            if (player.IsYourPlayer )
+            if (player.IsYourPlayer)
             {
                 if (Plugin.ServerConfig.reload_changes)
                 {
@@ -825,7 +825,7 @@ namespace RealismMod
                 PlayerState.IsMagReloading = false;
                 PlayerState.IsQuickReloading = false;
                 player.HandsAnimator.SetAnimationSpeed(1);
-      
+
                 if (Plugin.EnableLogging.Value == true)
                 {
                     Logger.LogWarning("===OnMagInsertedPatch/method_47===");

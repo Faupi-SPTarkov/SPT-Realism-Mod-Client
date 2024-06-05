@@ -95,7 +95,7 @@ namespace RealismMod
         {
             MountingUI mountingUI = Plugin.Hook.GetComponent<MountingUI>();
 
-            if (mountingUI != null) 
+            if (mountingUI != null)
             {
                 if (mountingUI.ActiveUIScreen == __instance.gameObject)
                 {

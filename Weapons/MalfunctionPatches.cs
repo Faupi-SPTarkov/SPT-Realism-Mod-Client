@@ -27,7 +27,7 @@ namespace RealismMod
             return typeof(Player.FirearmController).GetMethod("GetMalfunctionState", BindingFlags.Instance | BindingFlags.Public);
         }
 
-        private static void ExplodeWeapon(Player.FirearmController fc, Player player) 
+        private static void ExplodeWeapon(Player.FirearmController fc, Player player)
         {
             Singleton<Effects>.Instance.EmitGrenade("Grenade_new2", fc.CurrentFireport.Original.position, Vector3.up, 1f);
             fc.Weapon.Repairable.Durability = 0f;
@@ -58,12 +58,12 @@ namespace RealismMod
         [PatchPostfix]
         private static void Postfix(Player.FirearmController __instance, ref Weapon.EMalfunctionState __result, BulletClass ammoToFire)
         {
-         
+
             Player player = (Player)playerField.GetValue(__instance);
 
             bool do9x18Explodey = false;
             bool isPMMAmmo = ammoToFire.Template._id == "57371aab2459775a77142f22";
-            if (__instance.Weapon.AmmoCaliber == "9x18PM" && isPMMAmmo) 
+            if (__instance.Weapon.AmmoCaliber == "9x18PM" && isPMMAmmo)
             {
                 if (isPMMAmmo)
                 {
@@ -76,7 +76,7 @@ namespace RealismMod
 
             if (__instance.Weapon.AmmoCaliber != ammoToFire.Caliber)
             {
-             
+
                 bool explosiveMismatch = do9x18Explodey || (__instance.Weapon.AmmoCaliber == "366TKM" && ammoToFire.Caliber == "762x39") || (__instance.Weapon.AmmoCaliber == "556x45NATO" && ammoToFire.Caliber == "762x35") || (__instance.Weapon.AmmoCaliber == "762x51" && ammoToFire.Caliber == "68x51");
                 bool malfMismatch = (__instance.Weapon.AmmoCaliber == "762x39" && ammoToFire.Caliber == "366TKM") || (__instance.Weapon.AmmoCaliber == "762x35" && ammoToFire.Caliber == "556x45NATO") || (__instance.Weapon.AmmoCaliber == "68x51" && ammoToFire.Caliber == "762x51");
 
@@ -106,7 +106,7 @@ namespace RealismMod
                     {
                         ExplodeWeapon(__instance, player);
                     }
-    
+
                 }
             }
         }
@@ -175,7 +175,7 @@ namespace RealismMod
 
                 float malfDelta = Mathf.Min(WeaponStats.MalfChanceDelta * 3, 0.99f);
                 float subFactor = 1f;
-     
+
                 BackendConfigSettingsClass instance = Singleton<BackendConfigSettingsClass>.Instance;
                 MalfGlobals malfunctionGlobals = instance.Malfunction;
                 OverheatGlobals overheatGlobals = instance.Overheat;
