@@ -1,4 +1,4 @@
-﻿using Aki.Common.Http;
+using Aki.Common.Http;
 using Aki.Common.Utils;
 using BepInEx;
 using BepInEx.Bootstrap;
@@ -408,11 +408,8 @@ namespace RealismMod
             IconCache.Add(ENewItemAttributeId.OutOfRaidHP, Resources.Load<Sprite>("characteristics/icons/hpResource"));
             IconCache.Add(ENewItemAttributeId.StimType, Resources.Load<Sprite>("characteristics/icons/hpResource"));
 
-            Sprite balanceSprite = await requestSprite(AppDomain.CurrentDomain.BaseDirectory + "\\BepInEx\\plugins\\Realism\\icons\\balance.png");
-            Sprite recoilAngleSprite = await requestSprite(AppDomain.CurrentDomain.BaseDirectory + "\\BepInEx\\plugins\\Realism\\icons\\recoilAngle.png");
-
-            IconCache.Add(ENewItemAttributeId.Balance, balanceSprite);
-            IconCache.Add(ENewItemAttributeId.RecoilAngle, recoilAngleSprite);
+            IconCache.Add(ENewItemAttributeId.Balance, LoadedSprites["balance.png"]);
+            IconCache.Add(ENewItemAttributeId.RecoilAngle, LoadedSprites["recoilAngle.png"]);
         }
 
         private void loadSprites()
