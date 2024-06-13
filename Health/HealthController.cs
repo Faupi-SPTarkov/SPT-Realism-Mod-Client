@@ -342,9 +342,9 @@ namespace RealismMod
             FieldInfo fieldInfo1 = type1.GetField("dictionary_1", BindingFlags.NonPublic | BindingFlags.Static);
             var effectDict1 = (Dictionary<byte, string>)fieldInfo1.GetValue(null);
 
-            effectDict1.Add(Convert.ToByte(effectDict1.Count + 1), "ResourceRateDrain");
-            effectDict1.Add(Convert.ToByte(effectDict1.Count + 1), "HealthRegen");
-            effectDict1.Add(Convert.ToByte(effectDict1.Count + 1), "HealthDrain");
+            effectDict1.Add(Convert.ToByte(effectDict1.Count), "ResourceRateDrain");
+            effectDict1.Add(Convert.ToByte(effectDict1.Count), "HealthRegen");
+            effectDict1.Add(Convert.ToByte(effectDict1.Count), "HealthDrain");
 
             fieldInfo1.SetValue(null, effectDict1);
 
@@ -352,9 +352,9 @@ namespace RealismMod
             FieldInfo fieldInfo0 = type0.GetField("dictionary_0", BindingFlags.NonPublic | BindingFlags.Static);
             var effectDict0 = (Dictionary<string, byte>)fieldInfo0.GetValue(null);
 
-            effectDict0.Add("ResourceRateDrain", Convert.ToByte(effectDict0.Count + 1));
-            effectDict0.Add("HealthRegen", Convert.ToByte(effectDict0.Count + 1));
-            effectDict0.Add("HealthDrain", Convert.ToByte(effectDict0.Count + 1));
+            effectDict0.Add("ResourceRateDrain", Convert.ToByte(effectDict0.Count));
+            effectDict0.Add("HealthRegen", Convert.ToByte(effectDict0.Count));
+            effectDict0.Add("HealthDrain", Convert.ToByte(effectDict0.Count));
 
             fieldInfo0.SetValue(null, effectDict0);
 
@@ -488,13 +488,18 @@ namespace RealismMod
                 {
                     if (existingEff.GetType() == newEffect.GetType() && existingEff.BodyPart == newEffect.BodyPart)
                     {
-                        RemoveCustomEffectOfType(newEffect.GetType(), newEffect.BodyPart);
+                        RemoveCustomEffect(existingEff);
                         break;
                     }
                 }
             }
 
             activeHealthEffects.Add(newEffect);
+        }
+
+        public void RemoveCustomEffect(ICustomHealthEffect effect)
+        {
+            activeHealthEffects.Remove(effect);
         }
 
         public void RemoveCustomEffectOfType(Type effect, EBodyPart bodyPart)
@@ -504,7 +509,7 @@ namespace RealismMod
                 ICustomHealthEffect activeHealthEffect = activeHealthEffects[i];
                 if (activeHealthEffect.GetType() == effect && activeHealthEffect.BodyPart == bodyPart)
                 {
-                    activeHealthEffects.RemoveAt(i);
+                    RemoveCustomEffect(activeHealthEffect);
                 }
             }
         }

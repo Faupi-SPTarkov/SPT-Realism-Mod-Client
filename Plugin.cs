@@ -1,4 +1,4 @@
-using Aki.Common.Http;
+﻿using Aki.Common.Http;
 using Aki.Common.Utils;
 using BepInEx;
 using BepInEx.Bootstrap;
@@ -742,6 +742,7 @@ namespace RealismMod
                 new ToggleHeadDevicePatch().Enable();
                 new HealCostDisplayShortPatch().Enable();
                 new HealCostDisplayFullPatch().Enable();
+                new HealthEffectIconsPatch().Enable();
             }
             //needed for food and meds
             if (ServerConfig.med_changes || ServerConfig.food_changes)

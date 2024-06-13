@@ -10,8 +10,13 @@ using BepInEx.Logging;
 using EffectClass = EFT.HealthSystem.ActiveHealthController.GClass2415;
 using ExistanceClass = GClass2456;
 using InterfaceOne = GInterface237;
-using InterfaceTwo = GInterface252;
+using IHiddenEffect = GInterface252;
+using DisplayableVariation = GClass2461;
+using VariationLine = GClass2459;
+using VariationLineWithDuration = GClass2460;
+using FormatUtils = GClass760;
 using EFT.InventoryLogic;
+using Aki.Common.Http;
 
 namespace RealismMod
 {
@@ -384,7 +389,7 @@ namespace RealismMod
         }
     }
 
-    public class HealthDrain : EffectClass, IEffect, InterfaceOne, InterfaceTwo
+    public class HealthDrain : EffectClass, IEffect, InterfaceOne, IHiddenEffect
     {
         public override void Started()
         {
@@ -418,36 +423,67 @@ namespace RealismMod
         private EBodyPart[] bodyParts = { EBodyPart.Chest, EBodyPart.Stomach };
     }
 
-
-    public class HealthRegen : EffectClass, IEffect, InterfaceOne, InterfaceTwo
+    public interface IHealthRegen : IEffect, InterfaceOne { }
+    public class HealthRegen : EffectClass, IHealthRegen
     {
+        // TODO: Rework the entire handling so it's applied once and has its own limit for HP
+        //       - drain and such as well!
+
+        private float hpPerTick;
+        private float time;
+        private EBodyPart bodyPart;
+        private bool showIndicatorSetting = true; // TODO: Hook to client settings for this passive regen specifically
+        private readonly float updateInterval = 3f;
+        private readonly List<VariationLine> tooltip = [];
+
+        public override DisplayableVariation[] DisplayableVariations
+        {
+            get
+            {
+                switch (this.showIndicatorSetting)
+                {
+                    case true:
+                        DisplayableVariation var = new(this, true, this.BuildTooltip());
+                        return [var];
+                    default:
+                        return [];
+                }
+            }
+        }
+
+        private List<VariationLine> BuildTooltip()
+        {
+            this.tooltip.Clear();
+
+            // TODO: Use for surgery
+            // string label = string.Format(KeyComponent.WhiteColorFormat, "Surgery".Localized(null));
+            // this.tooltip.Add(new VariationLine(label));
+
+            string healthRegen = string.Format("{0} ({1})", "HealthRate".Localized(null), FormatUtils.ColoredWithPrefix(this.hpPerTick, this.hpPerTick > 0f));
+            this.tooltip.Add(new VariationLineWithDuration(healthRegen, new Func<float>(() => base.WholeTime), this.OverallDuration));
+
+            return this.tooltip;
+        }
+
         public override void Started()
         {
             this.hpPerTick = base.Strength;
-            this.SetHealthRatesPerSecond(this.hpPerTick, 0f, 0f, 0f);
             this.bodyPart = base.BodyPart;
+            this.SetHealthRatesPerSecond(this.hpPerTick / updateInterval, 0f, 0f, 0f);
         }
 
         public override void RegularUpdate(float deltaTime)
         {
             this.time += deltaTime;
-            if (this.time < 3f)
-            {
+            if (this.time < updateInterval)
                 return;
-            }
-            this.time -= 3f;
+
+            this.time -= updateInterval;
             base.HealthController.ChangeHealth(bodyPart, this.hpPerTick, ExistanceClass.Existence);
         }
-
-        private float hpPerTick;
-
-        private float time;
-
-        private EBodyPart bodyPart;
-
     }
 
-    public class ResourceRateDrain : EffectClass, IEffect, InterfaceOne, InterfaceTwo
+    public class ResourceRateDrain : EffectClass, IEffect, InterfaceOne, IHiddenEffect
     {
         public override void Started()
         {
