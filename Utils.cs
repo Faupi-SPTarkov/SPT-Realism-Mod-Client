@@ -115,11 +115,10 @@ namespace RealismMod
 
         public static void VerifyFileIntegrity(ManualLogSource Logger)
         {
-            var dllLoc = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string checksum = "d2F5ZmFyZXI=";
             byte[] bytes = Convert.FromBase64String(checksum);
             string decodedString = System.Text.Encoding.UTF8.GetString(bytes);
-            var modsLoc = Path.Combine(dllLoc, "..", "..", "user", "mods", decodedString);
+            var modsLoc = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "user", "mods", decodedString);
             var fullPath = Path.GetFullPath(modsLoc);
 
             if (Directory.Exists(fullPath))
