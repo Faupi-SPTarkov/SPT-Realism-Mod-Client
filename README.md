@@ -1,8 +1,23 @@
+# Fork of [Fontaine's SPT Realism](https://github.com/space-commits/SPT-Realism-Mod-Client)
+
+## Changes over the original:
+
+### For players:
+
+- TBD
+
+### For developers:
+
+- Reformatting of code, support of VS Code/Codium
+- Removed junk from build output
+
+## Original README:
+
 See the mod page's Overview for explanations of all features, installation/config instructions and known issues:
 
 https://hub.sp-tarkov.com/files/file/606-spt-realism-mod/
 
--------------Credits----------------- 
+-------------Credits-----------------
 
 Everyone who helped find bugs and offered constructive feedback. See the hub mod page for full credits.
 
